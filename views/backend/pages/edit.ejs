@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <form action="/update" method="post">
+            <input type="hidden" name="id" value="<%= value.id %>">
+
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="<%= value.username %>">
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="<%= value.email %>">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" value="<%= value.password %>">
+
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
