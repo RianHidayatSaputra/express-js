@@ -3,41 +3,43 @@
 <head>
     <%- include('../partials/head'); %>
 </head>
-<body class="container">
+<body>
 
-    <header>
         <%- include('../partials/header'); %>
-    </header>
-
-    <main>
-        <div class="jumbotron">
-            <table class="table">
-                <tr>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Action</th>
-                </tr>
-                <% list_data.forEach(function(data) { %>
+        <div class="row" style="height: 600px;">
+            <div class="col-md-1 bg-dark bg-opacity-25">
+                <div class="row border-bottom">
+                    <a class="text-decoration-none text-white mx-4 my-2 border-width" href="/dashboard/user">User</a>
+                </div>
+                <div class="row border-bottom">
+                    <a class="text-decoration-none text-white mx-4 my-2 border-width" href="#">Product</a>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <a href="/create" class="btn btn-info my-2">Tambah</a>
+                <table class="table">
                     <tr>
-                        <td><%= data.id %></td>
-                        <td><%= data.username %></td>
-                        <td><%= data.email %></td>
-                        <td><%= data.password %></td>
-                        <td>
-                            <a href="/edit/<%= data.id %>" class="btn btn-warning">Edit</a>
-                            <a href="/delete/<%= data.id %>" class="btn btn-danger">Delete</a>
-                        </td>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
                     </tr>
-                <% }); %>
-            </table>
+                    <% list_data.forEach(function(data) { %>
+                        <tr>
+                            <td><%= data.id %></td>
+                            <td><%= data.username %></td>
+                            <td><%= data.email %></td>
+                            <td><%= data.password %></td>
+                            <td>
+                                <a href="/edit/<%= data.id %>" class="btn btn-warning">Edit</a>
+                                <a href="/delete/<%= data.id %>" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </table>
+            </div>
         </div>
-    </main>
-
-    <footer>
-        <%- include('../partials/footer'); %>
-    </footer>
 
 </body>
 </html>

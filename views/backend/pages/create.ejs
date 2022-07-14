@@ -3,34 +3,38 @@
 <head>
     <%- include('../partials/head'); %>
 </head>
-<body class="container">
+<body>
 
-<header>
-    <%- include('../partials/header'); %>
-</header>
-
-<main>
-    <div class="jumbotron">
-        <form action="" method="post" class="form-control">
-            <input type="hidden" name="id">
-
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username">
-
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email">
-
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-
-            <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
-    </div>
-</main>
-
-<footer>
-    <%- include('../partials/footer'); %>
-</footer>
+        <%- include('../partials/header'); %>
+        <div class="row">
+            <div class="col-md-1 bg-dark bg-opacity-25">
+                <div class="row border-bottom">
+                    <a class="text-decoration-none text-white mx-4 my-2 border-width" href="/dashboard/user">User</a>
+                </div>
+                <div class="row border-bottom">
+                    <a class="text-decoration-none text-white mx-4 my-2 border-width" href="/dashboard/product">Product</a>
+                </div>
+            </div>
+            <div class="col-md-4 p-3">
+                <form action="/store" method="post">
+                    <input type="hidden" name="id">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
 
 </body>
 </html>
+

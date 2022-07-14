@@ -4,6 +4,6 @@ const db = new sequelize('crud_express_js', 'root', '', {
     dialect: 'mysql'
 });
 
-db.sync({});
+db.sync({sequelize});
 
 module.exports = db;

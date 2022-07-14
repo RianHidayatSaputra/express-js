@@ -1,25 +1,62 @@
 const express = require('express');
 const app = express();
-const db = require('./config/db');
+// const db = require('./config/db');
 const User = require('./models/User');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const {v4: uuidv4} = require('uuid');
+const router = require('./router');
 
-// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(session({
+    secret: uuidv4(),
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.set('view engine', 'ejs');
 
 // db.authenticate().then(() => 
 //     console.log('Connection Successfully!')
 // );  
 
+app.use('/', router);
+
 app.get('/', async (req, res) => {
+    res.status(200).render('login');
+});
+
+app.get('/dashboard', async (req, res) => {
+    
+    res.status(200).render('backend/pages/dashboard');
+});
+
+app.get('/dashboard/user', async (req, res) => {
 
     var list_data = await User.findAll();
 
-    res.render('backend/pages/index', {
+    res.status(200).render('backend/pages/index', {
         list_data: list_data
     });
+
 });
 
-app.create
+app.get('/create', async (req, res) => {
+    res.status(200).render('backend/pages/create');
+});
+
+app.post('/store', async (req, res) => {
+    const { username, email, password } = req.body;
+
+    const newUser = new User({
+        username, email, password
+    })
+    await newUser.save();
+    // console.log('hei')
+    res.status(201).redirect('/dashboard/user');
+});
 
 app.get('/edit/:id', async (req, res) => {
         const id = req.params.id;
@@ -28,12 +65,12 @@ app.get('/edit/:id', async (req, res) => {
             where: {id: id}
         });
 
-    res.render('backend/pages/edit', {
+    res.status(200).render('backend/pages/edit', {
         value: getUser
     });
 });
 
-app.post('/update', async (req, res) => {
+app.post('/update/:id', async (req, res) => {
     const {username, email, password} = req.body;
     const id = req.params.id;
 
@@ -41,8 +78,8 @@ app.post('/update', async (req, res) => {
         username, email, password
     }, { where: { id:id } });
     await updateUser;
-    alert('succes');
-    res.redirect('/');
+
+    res.status(200).redirect('/dashboard/user');
 });
 
 app.get('/delete/:id', async (req, res) => {
@@ -53,11 +90,21 @@ app.get('/delete/:id', async (req, res) => {
     });
     await deleteUser;
 
-    res.redirect('/');
+    res.status(200).redirect('/dashboard/user');
+});
+
+app.post('/register/store', async (req, res) => {
+    const {username, email, password} = req.body;
+    const register = new User({
+        username, email, password
+    });
+    await register.save();
+
+    res.status(201).redirect('/')
 });
 
 
-
+app.listen(8000, () => console.log('Port berjalan di 8000'));
 
 
 
@@ -154,4 +201,3 @@ app.get('/delete/:id', async (req, res) => {
 //     }
 // });
 
-app.listen(8000, () => console.log('Port berjalan di 8000'));
