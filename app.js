@@ -6,6 +6,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const {v4: uuidv4} = require('uuid');
 const router = require('./router');
+const validator = require('validator');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -53,6 +54,12 @@ app.post('/store', async (req, res) => {
     const newUser = new User({
         username, email, password
     })
+
+    if (!validator.isEmail(email)) {
+        res.send('<h1>Email tidak valid</h1>');
+        return false;
+    }
+
     await newUser.save();
     // console.log('hei')
     res.status(201).redirect('/dashboard/user');
@@ -77,6 +84,7 @@ app.post('/update/:id', async (req, res) => {
     const updateUser = await User.update({
         username, email, password
     }, { where: { id:id } });
+
     await updateUser;
 
     res.status(200).redirect('/dashboard/user');
